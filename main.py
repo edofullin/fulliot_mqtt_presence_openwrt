@@ -70,7 +70,7 @@ def receive_ubus_updates():
 
     while True:
         str = process.stdout.readline().decode('utf-8') # every time ubus throws a new line check if it is a connected device
-        print(str)
+        logger.info(str)
         js = json.loads(str)["hostmanager.devicechanged"]
 
         # a newly connected device is reported immediately to trigger automations
