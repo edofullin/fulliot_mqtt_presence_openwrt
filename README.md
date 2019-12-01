@@ -44,8 +44,8 @@ $DEV represents the name of the device as defined in the monitored_devices secti
 
 You can run the script directly with ```python PATH_TO_MAIN.py```
 
-Otherwise you can set you system to start the program at boot by setting it up as a service.
-If you use OpenWRT you can copy the mqtt_arp_presence to your /etc/init.d directory, change the startup command to the directory where you put your main.py and the run
+Otherwise you can set up your system to start the program at boot by setting it up as a service.
+If you use OpenWRT you can copy the mqtt_arp_presence to your /etc/init.d directory, change the startup command to the directory where you put your main.py and then run
 ```bash
 /etc/init.d/mqtt_arp_presence enable
 /etc/init.d/mqtt_arp_presence start
@@ -56,7 +56,7 @@ This way it will start at every boot. (more info [here](https://openwrt.org/docs
 # Usage
 
 I created this program because I couldn't find a way to use presence detection in home assistant.
-LUCI RPC did not work on my particular router and was too slow to report when a device connected, and bluetooth wouldn't work because I usually keep it off on my phone.
+LUCI RPC did not work on my particular router and was too slow to report when a device connected, bluetooth wouldn't work because I usually keep it off on my phone and gps draws too much battery.
 
 This script solved all problems, as soon as I enter in the WiFi range the phone connects and all my automations start!
 
