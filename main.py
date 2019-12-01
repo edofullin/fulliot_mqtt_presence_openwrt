@@ -99,7 +99,9 @@ def main():
 
     mqtt_client = mqtt.Client(config["mqtt_clientid"], 1883, 60)
     
-    mqtt_client.username_pw_set(config["mqtt_username"], config["mqtt_password"])
+    if "mqtt_username" in config and "mqtt_password" in config and "mqtt_username" != "none":
+        mqtt_client.username_pw_set(config["mqtt_username"], config["mqtt_password"])
+
     mqtt_client.will_set(config["mqtt_will_topic"], "offline", 2, True)
     mqtt_client.on_connect = mqtt_connected
 
