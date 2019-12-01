@@ -1,12 +1,14 @@
 from subprocess import PIPE, Popen
 from threading import Thread, Timer
 from python_arptable import get_arp_table
+from daemonize import Daemonize
 
 import time
 import paho.mqtt.client as mqtt
 import json
+import os
 
-config = None
+config = {}
 monitored_mac = []
 
 mqtt_client = None
@@ -55,9 +57,10 @@ def receive_ubus_updates():
                 update_hass_state(mac, state if state == "connected" else "not_connected")
 
 def mqtt_connected(client, userdata, flags, rc):
-    client.publish(config["mqtt_will_topic"], "online", 0, True)
+    client.publish(config["mqtt_will_topic"], "online", 2, True)
 
-if __name__ == "__main__":
+
+def main():
     with open("./config.json", "r") as file:
         config = json.load(file)
     
@@ -66,18 +69,26 @@ if __name__ == "__main__":
     mqtt_client = mqtt.Client(config["mqtt_clientid"], 1883, 60)
     
     mqtt_client.username_pw_set(config["mqtt_username"], config["mqtt_password"])
-    mqtt_client.will_set(config["mqtt_will_topic"], "offline", 0, True)
+    mqtt_client.will_set(config["mqtt_will_topic"], "offline", 2, True)
     mqtt_client.on_connect = mqtt_connected
 
     mqtt_client.connect(config["mqtt_host"])
+    mqtt_client.publish(config["mqtt_will_topic"], "online", 2, True)
 
-    uthread = Thread(target=receive_ubus_updates)
-    uthread.daemon = False
-    uthread.start()
+    # uthread = Thread(target=receive_ubus_updates)
+    # uthread.daemon = False
+    # uthread.start()
 
     sthread = Thread(target=send_dev_updates)
     sthread.daemon = True
     sthread.start()
 
     mqtt_client.loop_forever()
+
+
+if __name__ == "__main__":
+    deamon = Daemonize(app="mqtt_presence_detection", pid="/tmp/mpd.pid", action=main, verbose=True, chdir=os.path.dirname(os.path.abspath(__file__)))
+    deamon.start()
+
+    
 
