@@ -1,4 +1,4 @@
-# fulliot_mqtt_presence_openwrt
+# OPENWRT MQTT Presence Detection
 A Python service that sends a mqtt message when specified devices connect/disconnect
 
 This is a python script that listens for ubus events related to a device connection and every 30 seconds checks arp table to get the full list of connected devices.
