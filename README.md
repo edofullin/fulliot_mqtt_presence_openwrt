@@ -60,7 +60,7 @@ LUCI RPC did not work on my particular router and was too slow to report when a 
 
 This script solved all problems, as soon as I enter in the WiFi range the phone connects and all my automations start!
 
-To set it up with home assistant you must have a MQTT broker and configure device_tracker as in [this](https://www.home-assistant.io/integrations/device_tracker.mqtt) article.
+To set it up with home assistant you must have a MQTT broker and configure device_tracker as in [this](https://www.home-assistant.io/integrations/device_tracker.mqtt) article _(remember to set payload_home to connected and payload_not_home to not_connected)_.
 
 # Pull Request
 
