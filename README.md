@@ -19,7 +19,7 @@ To run this script you have to install the requirements via pip:
 pip install -r requirements.txt 
 ```
 
-And then you should create a config.txt file in the same directory as the script with this structure:
+And then you should create a config.json file in the same directory as the script with this structure:
 ```json
 {
     "monitored_devices": [
